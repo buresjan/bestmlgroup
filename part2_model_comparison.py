@@ -195,10 +195,12 @@ if __name__ == "__main__":
 
 
     lambdas = np.array(range(10, 310, 10))
-    print(lambdas)
-    results = two_level_cross_validation(X, y, lambdas, np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 10, 10, 37)
+    # lambdas = np.array(range(0, 1000, 20))
+    # hidden_units = np.array([1, 2, 3, 4])
+    # hidden_units = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+    hidden_units = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    results = two_level_cross_validation(X, y, lambdas, hidden_units, 10, 10, 37)
 
-    print(results)
 
     ## Add values to columns in output table
     df_output_table['test_data_size'] = results['data_size']
