@@ -188,7 +188,7 @@ for k_outer in range(0,K_1): #goes from 0 to 9
     # baseline
     y_baseline_est = np.full((y_test.size), np.bincount(y).argmax())
     misclass_rate_baseline = np.sum(y_baseline_est != y_test) / float(len(y_baseline_est))
-    print(np.mean(y_test == 1))
+    #print(np.mean(y_test == 1))
     dataframe_baseline [k_outer] = misclass_rate_baseline
 
 
@@ -201,33 +201,33 @@ for k_outer in range(0,K_1): #goes from 0 to 9
     print(string3)
 
 
-    # print("################################### STATISTICAL EVALUATION")
-    # print("Log regress vs KNN")
-    # thetahat, CI_setupII, p_setupII = mcnemar(y_true = y_test, yhatA= log_regress_final_yest , yhatB = knn_final_yest, alpha = 0.05)
+    print("################################### STATISTICAL EVALUATION")
+    print("Log regress vs KNN")
+    thetahat, CI_setupII, p_setupII = mcnemar(y_true = y_test, yhatA= log_regress_final_yest , yhatB = knn_final_yest, alpha = 0.05)
 
-    # # print(thetahat)
-    # # print( p_setupII )
-    # # print(CI_setupII)
+    # print(thetahat)
+    # print( p_setupII )
+    # print(CI_setupII)
 
-    # print("\n")
+    print("\n")
 
-    # print("Log regress vs Baseline")
-    # thetahat, CI_setupII, p_setupII = mcnemar(y_true = y_test, yhatA= log_regress_final_yest , yhatB = y_baseline_est, alpha = 0.05)
+    print("Log regress vs Baseline")
+    thetahat, CI_setupII, p_setupII = mcnemar(y_true = y_test, yhatA= log_regress_final_yest , yhatB = y_baseline_est, alpha = 0.05)
 
-    # # print(thetahat)
-    # # print( p_setupII )
-    # # print(CI_setupII)
+    # print(thetahat)
+    # print( p_setupII )
+    # print(CI_setupII)
 
-    # print("\n")
+    print("\n")
     
-    # print("baseline vs KNN")
-    # thetahat, CI_setupII, p_setupII = mcnemar(y_true = y_test, yhatA= y_baseline_est , yhatB = knn_final_yest, alpha = 0.05)
+    print("baseline vs KNN")
+    thetahat, CI_setupII, p_setupII = mcnemar(y_true = y_test, yhatA= y_baseline_est , yhatB = knn_final_yest, alpha = 0.05)
 
-    # # print(thetahat)
-    # # print( p_setupII )
-    # # print(CI_setupII)
+    # print(thetahat)
+    # print( p_setupII )
+    # print(CI_setupII)
 
-    # print("\n")
+    print("\n")
 n_of_cols = 5
 n_of_index = 10
 df_output_table = pd.DataFrame(np.ones((n_of_index, n_of_cols)), index=range(1, n_of_index + 1))
