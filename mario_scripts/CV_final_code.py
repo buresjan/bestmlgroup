@@ -24,8 +24,8 @@ import numpy as np
 from scipy.io import loadmat
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
-
-from dtuimldmtools import confmatplot, rocplot
+from dtuimldmtools import confmatplot, rocplot, statistics
+from dtuimldmtools import *
 
 # Load the dataset file using pandas
 df = pd.read_csv("HeartDisease.csv")
@@ -158,6 +158,7 @@ for k_outer in range(0,K_1): #goes from 0 to 9
     knclassifier = KNeighborsClassifier(n_neighbors=opt_k, p=dist, metric=metric, metric_params=metric_params)
     knclassifier.fit(X_par, y_par)
     y_test_est = knclassifier.predict(X_test).T
+    knn_final_yest = y_test_est
     knn_final_error = np.sum(y_test_est != y_test) / len(y_test)
     knn_final_k = opt_k
 
@@ -175,6 +176,7 @@ for k_outer in range(0,K_1): #goes from 0 to 9
     mdl.fit(X_par, y_par)
 
     y_test_est = mdl.predict(X_test).T
+    log_regress_final_yest = y_test_est
 
     log_regress_final_error = np.sum(y_test_est != y_test) / len(y_test)
     log_regress_final_lambda = opt_lambda
@@ -186,7 +188,7 @@ for k_outer in range(0,K_1): #goes from 0 to 9
     # baseline
     y_baseline_est = np.full((y_test.size), np.bincount(y).argmax())
     misclass_rate_baseline = np.sum(y_baseline_est != y_test) / float(len(y_baseline_est))
-
+    print(np.mean(y_test == 1))
     dataframe_baseline [k_outer] = misclass_rate_baseline
 
 
@@ -197,7 +199,35 @@ for k_outer in range(0,K_1): #goes from 0 to 9
     print(string1)
     print(string2)    
     print(string3)
+
+
+    # print("################################### STATISTICAL EVALUATION")
+    # print("Log regress vs KNN")
+    # thetahat, CI_setupII, p_setupII = mcnemar(y_true = y_test, yhatA= log_regress_final_yest , yhatB = knn_final_yest, alpha = 0.05)
+
+    # # print(thetahat)
+    # # print( p_setupII )
+    # # print(CI_setupII)
+
+    # print("\n")
+
+    # print("Log regress vs Baseline")
+    # thetahat, CI_setupII, p_setupII = mcnemar(y_true = y_test, yhatA= log_regress_final_yest , yhatB = y_baseline_est, alpha = 0.05)
+
+    # # print(thetahat)
+    # # print( p_setupII )
+    # # print(CI_setupII)
+
+    # print("\n")
     
+    # print("baseline vs KNN")
+    # thetahat, CI_setupII, p_setupII = mcnemar(y_true = y_test, yhatA= y_baseline_est , yhatB = knn_final_yest, alpha = 0.05)
+
+    # # print(thetahat)
+    # # print( p_setupII )
+    # # print(CI_setupII)
+
+    # print("\n")
 n_of_cols = 5
 n_of_index = 10
 df_output_table = pd.DataFrame(np.ones((n_of_index, n_of_cols)), index=range(1, n_of_index + 1))
